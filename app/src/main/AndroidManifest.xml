@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera" android:required="false"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,12 +23,12 @@
         </activity>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.dr5.fileprovider"
+            android:authorities="com.example.android.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
     </application>
 
