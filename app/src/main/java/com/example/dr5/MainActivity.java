@@ -1,24 +1,10 @@
 package com.example.dr5;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,21 +16,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
-
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
-import static java.lang.System.out;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -59,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     final int CAMERA_REQUEST = 9999;
     final int LOAD_REQUEST = 8888;
     String mCurrentPhotoPath;
+    String mCurrentPath;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,6 +93,8 @@ public class MainActivity extends AppCompatActivity {
             textTargetUri.setText(targetUri.toString());
             try {
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                mCurrentPath = targetUri.getEncodedPath();
+                //bitmap = rotateImage(bitmap);
                 targetImage.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -117,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 InputStream ims = new FileInputStream(file);
                 targetImage.setImageBitmap(BitmapFactory.decodeStream(ims));
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
             } catch (FileNotFoundException e) {
                 return;
             }
@@ -129,12 +120,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
-    }
-
-    private String getPictureName() {
-    SimpleDateFormat sdf= new SimpleDateFormat("yyyyMMdd_HHmmss");
-    String timestamp = sdf.format(new Date());
-    return "DroidReader"+timestamp+".jpg";
     }
 
     public void loadImage(){
@@ -169,8 +154,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    String currentPhotoPath;
-
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -198,9 +181,39 @@ public class MainActivity extends AppCompatActivity {
             }
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(MainActivity.this, "com.example.android.fileprovider",createImageFile());
+                bitmap = BitmapFactory.decodeFile(photoFile.getPath());
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST);
             }
         }
+    }
+
+    private Bitmap rotateImage(Bitmap bitmap) {
+        ExifInterface exifInterface = null;
+        try {
+            exifInterface = new ExifInterface(mCurrentPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int orientation = 6;
+        if (exifInterface != null) {
+            orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+        }
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(270);
+                break;
+            default:
+        }
+        Bitmap rotateBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        targetImage.setImageBitmap(rotateBitmap);
+        return rotateBitmap;
     }
 }
