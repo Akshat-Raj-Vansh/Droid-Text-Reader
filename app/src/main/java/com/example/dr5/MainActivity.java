@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         camera.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 //startCamera();
                 try {
                     dispatchTakePictureIntent();
                 } catch (IOException e) {
@@ -130,16 +129,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
-    }
-
-    public void startCamera(){
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        String pictureName = getPictureName();
-        File imageFile = new File(pictureDirectory, pictureName);
-        //Uri pictureUri = FileProvider.getUriForFile(this, imageFile);
-       // cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, pictureUri);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
 
     private String getPictureName() {
