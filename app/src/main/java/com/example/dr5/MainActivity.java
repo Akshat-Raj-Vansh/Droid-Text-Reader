@@ -129,17 +129,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onScanCompleted(String path, Uri uri) {
                         }
                     });
-        }/*else if (resultCode == RESULT_OK && requestCode == CAMERA_REQUEST && data != null && data.getExtras() != null)
-            try {
-                //bitmap = (Bitmap) data.getExtras().get("data");
-                Bundle extras = data.getExtras();
-                bitmap = (Bitmap)extras.get("data");
-                //galleryAddPic();
-                targetImage.setImageBitmap(bitmap);
-                textTargetUri.setText("Picture Clicked");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
+        }
     }
 
     public void startCamera(){
@@ -212,17 +202,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void dispatchTakePictureIntent() throws IOException {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
             File photoFile = null;
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-                // Error occurred while creating the File
-                return;
+                 return;
             }
-            // Continue only if the File was successfully created
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(MainActivity.this, "com.example.android.fileprovider",createImageFile());
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
