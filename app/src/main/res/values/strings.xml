@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">DR4</string>
     <string name="error_prompt">Detector depedencies not yet available></string>
+    <string name="open_camera">Open Camera</string>
 </resources>

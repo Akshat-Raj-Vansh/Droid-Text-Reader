@@ -24,6 +24,7 @@ import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,6 +34,9 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,12 +45,19 @@ public class MainActivity extends AppCompatActivity {
     Button btnProcess;
     Button buttonLoadImage;
     Button camera;
+    FloatingActionButton allProcesses;
+    FloatingActionButton openCameraX;
+    FloatingActionButton btnProcessX;
+    FloatingActionButton loadImageX;
+    FloatingActionButton updateToCloud;
     TextView txtView;
     Bitmap bitmap;
     final int CAMERA_REQUEST = 9999;
     final int LOAD_REQUEST = 8888;
     String mCurrentPhotoPath;
     String mCurrentPath;
+    boolean isFabOpen = false;
+    private Animation fab_open, fab_close, rotate_forward, rotate_backward;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         buttonLoadImage = findViewById(R.id.loadimage);
         btnProcess = findViewById(R.id.btnProcess);
+
+        allProcesses = findViewById(R.id.allProcesses);
+        openCameraX = findViewById(R.id.openCameraX);
+        btnProcessX = findViewById(R.id.btnProcessX);
+        loadImageX = findViewById(R.id.loadImageX);
+        updateToCloud = findViewById(R.id.updateToCloud);
+
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_backward);
+
         camera = findViewById(R.id.camera);
         txtView = findViewById(R.id.txtView);
         textTargetUri = findViewById(R.id.targeturi);
@@ -70,6 +93,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 loadImage();
+            }
+        });
+
+        allProcesses.setOnClickListener(new FloatingActionButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                animateFAB();
             }
         });
 
@@ -216,4 +246,44 @@ public class MainActivity extends AppCompatActivity {
         targetImage.setImageBitmap(rotateBitmap);
         return rotateBitmap;
     }
+
+    public void animateFAB() {
+
+        if (isFabOpen) {
+            allProcesses.startAnimation(rotate_backward);
+
+            loadImageX.startAnimation(fab_close);
+            openCameraX.startAnimation(fab_close);
+            updateToCloud.startAnimation(fab_close);
+            btnProcessX.startAnimation(fab_close);
+
+            loadImageX.setClickable(false);
+            openCameraX.setClickable(false);
+            updateToCloud.setClickable(false);
+            btnProcessX.setClickable(false);
+
+            isFabOpen = false;
+            Log.d("FAB", "close");
+
+        } else {
+
+            allProcesses.startAnimation(rotate_forward);
+
+            loadImageX.startAnimation(fab_open);
+            openCameraX.startAnimation(fab_open);
+            updateToCloud.startAnimation(fab_open);
+            btnProcessX.startAnimation(fab_open);
+
+            loadImageX.setClickable(true);
+            openCameraX.setClickable(true);
+            updateToCloud.setClickable(true);
+            btnProcessX.setClickable(true);
+
+            isFabOpen = true;
+            Log.d("FAB", "open");
+
+        }
+    }
+
+
 }
