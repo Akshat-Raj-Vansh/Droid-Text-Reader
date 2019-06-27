@@ -117,7 +117,7 @@
         app:backgroundTint="@color/colorSaveToCloud"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/openCameraX"
-        tools:srcCompat="@tools:sample/avatars[13]" />
+        tools:srcCompat="@android:drawable/ic_menu_save" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/openCameraX"
@@ -130,7 +130,7 @@
         app:backgroundTint="@color/colorLoadCamera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/loadImageX"
-        tools:srcCompat="@tools:sample/avatars[12]" />
+        tools:srcCompat="@android:drawable/ic_menu_camera" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/loadImageX"
@@ -139,7 +139,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="42dp"
         android:clickable="true"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@android:drawable/ic_menu_gallery"
         android:visibility="invisible"
         app:backgroundTint="@color/colorLoadImage"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -158,7 +158,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/allProcesses"
         app:pressedTranslationZ="12dp"
-        tools:srcCompat="@tools:sample/avatars[0]" />
+        tools:srcCompat="@android:drawable/ic_menu_agenda" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/allProcesses"
@@ -171,11 +171,11 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="42dp"
         android:clickable="true"
-        android:src="@drawable/common_google_signin_btn_icon_dark"
+        android:src="@android:drawable/ic_input_add"
         app:backgroundTint="@color/colorAllProcesses"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        tools:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
