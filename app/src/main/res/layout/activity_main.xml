@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FDC1C1C1"
     android:orientation="vertical"
     android:padding="15dp">
 
@@ -29,9 +31,11 @@
             <ImageView
                 android:id="@+id/image_view"
                 android:layout_width="400sp"
-                android:layout_height="600sp"
+                android:layout_height="535sp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:background="#FCFCFC"
+                android:elevation="5sp"
                 android:scaleType="centerInside"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -114,42 +118,42 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/updateToCloud"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="42dp"
         android:clickable="true"
-        android:visibility="invisible"
         android:src="@mipmap/ic_cloud"
-        app:backgroundTint="@color/colorSaveToCloud"
+        android:visibility="invisible"
+        app:backgroundTint="#36A991"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/openCameraX"
         tools:srcCompat="@mipmap/ic_cloud" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/openCameraX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="42dp"
         android:clickable="true"
         android:src="@mipmap/ic_camera"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorLoadCamera"
+        app:backgroundTint="#009688"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/loadImageX"
         tools:srcCompat="@mipmap/ic_camera" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/loadImageX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="42dp"
         android:clickable="true"
         android:src="@drawable/ic_gallery"
         android:visibility="invisible"
-        app:backgroundTint="@color/colorLoadImage"
+        app:backgroundTint="#009688"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnProcessX"
         tools:srcCompat="@drawable/ic_gallery" />
@@ -157,14 +161,14 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnProcessX"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="42dp"
-        android:visibility="invisible"
         android:src="@mipmap/ic_process"
-        app:backgroundTint="@color/colorProcess"
+        android:visibility="invisible"
+        app:backgroundTint="#009688"
         app:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/allProcesses"
@@ -173,8 +177,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/allProcesses"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
@@ -183,7 +187,9 @@
         android:layout_marginBottom="42dp"
         android:clickable="true"
         android:src="@mipmap/ic_allprocess"
-        app:backgroundTint="@color/colorAllProcesses"
+        app:backgroundTint="#A7A6A4"
+        app:fabCustomSize="56dp"
+        app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"

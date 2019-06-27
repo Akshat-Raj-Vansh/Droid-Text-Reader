@@ -3,7 +3,6 @@ package com.example.dr5;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
@@ -67,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
+
         buttonLoadImage = findViewById(R.id.loadimage);
         btnProcess = findViewById(R.id.btnProcess);
 
@@ -270,17 +275,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void postProcessing(String text) {
-        StringTokenizer st = new StringTokenizer(text);
-        String prev = "";
-        String current = "";
-        while (st.hasMoreTokens()) {
-            prev = current;
-            current = st.nextToken();
-            //if(current.indexOf('C')!=-1 && prev.contains("1234567890"))
-            ThermomterReading.setValue(text);
+        StringTokenizer string = new StringTokenizer(text);
+        String value = "";
+        String word = "";
+        while (string.hasMoreTokens()) {
+            word = string.nextToken();
+            if (IsNumber(word)) {
+                value = value + " " + word;
+            }
         }
 
     }
 
-
+    private boolean IsNumber(String word) {
+        int length = word.length();
+        boolean flag = true;
+        for (int i = 0; i <= length; i++) {
+            if ("1234567890".indexOf(word.charAt(i)) == -1) {
+                flag = false;
+                break;
+            }
+        }
+        return flag;
+    }
 }
