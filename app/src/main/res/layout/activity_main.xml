@@ -28,14 +28,43 @@
 
             <ImageView
                 android:id="@+id/image_view"
-                android:layout_width="300dp"
-                android:layout_height="400dp"
+                android:layout_width="400sp"
+                android:layout_height="600sp"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:scaleType="centerInside"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/targeturi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="8dp"
+                android:text="Address"
+                android:textSize="25sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/txtView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_view" />
+
+            <TextView
+                android:id="@+id/txtView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
+                android:text="No Text"
+                android:textSize="25sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_view" />
 
             <Button
                 android:id="@+id/camera"
@@ -45,6 +74,7 @@
                 android:layout_marginTop="28dp"
                 android:layout_marginEnd="50dp"
                 android:text="@string/open_camera"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,6 +89,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="50dp"
                 android:text="Load Image"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,35 +103,10 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="50dp"
                 android:text="Process"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/loadimage" />
-
-            <TextView
-                android:id="@+id/targeturi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:text="No Text"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnProcess" />
-
-            <TextView
-                android:id="@+id/txtView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:text="No Text"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/targeturi" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -114,10 +120,11 @@
         android:layout_marginBottom="42dp"
         android:clickable="true"
         android:visibility="invisible"
+        android:src="@mipmap/ic_cloud"
         app:backgroundTint="@color/colorSaveToCloud"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/openCameraX"
-        tools:srcCompat="@android:drawable/ic_menu_save" />
+        tools:srcCompat="@mipmap/ic_cloud" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/openCameraX"
@@ -126,11 +133,12 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="42dp"
         android:clickable="true"
+        android:src="@mipmap/ic_camera"
         android:visibility="invisible"
         app:backgroundTint="@color/colorLoadCamera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/loadImageX"
-        tools:srcCompat="@android:drawable/ic_menu_camera" />
+        tools:srcCompat="@mipmap/ic_camera" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/loadImageX"
@@ -139,11 +147,13 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="42dp"
         android:clickable="true"
-        android:src="@android:drawable/ic_menu_gallery"
+        android:src="@drawable/ic_gallery"
         android:visibility="invisible"
         app:backgroundTint="@color/colorLoadImage"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnProcessX" />
+        app:layout_constraintEnd_toStartOf="@+id/btnProcessX"
+        tools:srcCompat="@drawable/ic_gallery" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnProcessX"
@@ -153,12 +163,13 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="42dp"
         android:visibility="invisible"
+        android:src="@mipmap/ic_process"
         app:backgroundTint="@color/colorProcess"
         app:elevation="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/allProcesses"
         app:pressedTranslationZ="12dp"
-        tools:srcCompat="@android:drawable/ic_menu_agenda" />
+        tools:srcCompat="@mipmap/ic_process" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/allProcesses"
@@ -171,11 +182,11 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="42dp"
         android:clickable="true"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@mipmap/ic_allprocess"
         app:backgroundTint="@color/colorAllProcesses"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        tools:srcCompat="@android:drawable/ic_input_add" />
+        tools:srcCompat="@mipmap/ic_allprocess" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

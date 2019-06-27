@@ -3,8 +3,7 @@ package com.example.dr5;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
+
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,6 +24,8 @@ import com.google.android.gms.vision.text.Text;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,10 +34,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
     String mCurrentPath;
     boolean isFabOpen = false;
     private Animation fab_open, fab_close, rotate_forward, rotate_backward;
+    String text = "";
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ThermomterReading = database.getReference("Thermometer");
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,14 +86,14 @@ public class MainActivity extends AppCompatActivity {
         textTargetUri = findViewById(R.id.targeturi);
         targetImage = findViewById(R.id.image_view);
 
-        btnProcess.setOnClickListener(new View.OnClickListener() {
+        btnProcessX.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                processImage();
             }
         });
 
-        buttonLoadImage.setOnClickListener(new Button.OnClickListener() {
+        loadImageX.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadImage();
@@ -103,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        camera.setOnClickListener(new Button.OnClickListener() {
+        openCameraX.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -111,6 +115,13 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        updateToCloud.setOnClickListener(new FloatingActionButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postProcessing(text);
             }
         });
     }
@@ -177,8 +188,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-            if (strBuilder.toString().length() != 0)
+            if (strBuilder.toString().length() != 0) {
+                text = (strBuilder.toString().substring(0, strBuilder.toString().length() - 1));
                 txtView.setText(strBuilder.toString().substring(0, strBuilder.toString().length() - 1));
+            }
             else
                 txtView.setText("Found nothing!");
         }
@@ -218,35 +231,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private Bitmap rotateImage(Bitmap bitmap) {
-        ExifInterface exifInterface = null;
-        try {
-            exifInterface = new ExifInterface(mCurrentPath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int orientation = 6;
-        if (exifInterface != null) {
-            orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-        }
-        Matrix matrix = new Matrix();
-        switch (orientation) {
-            case ExifInterface.ORIENTATION_ROTATE_90:
-                matrix.setRotate(90);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_180:
-                matrix.setRotate(180);
-                break;
-            case ExifInterface.ORIENTATION_ROTATE_270:
-                matrix.setRotate(270);
-                break;
-            default:
-        }
-        Bitmap rotateBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        targetImage.setImageBitmap(rotateBitmap);
-        return rotateBitmap;
-    }
-
     public void animateFAB() {
 
         if (isFabOpen) {
@@ -283,6 +267,19 @@ public class MainActivity extends AppCompatActivity {
             Log.d("FAB", "open");
 
         }
+    }
+
+    public void postProcessing(String text) {
+        StringTokenizer st = new StringTokenizer(text);
+        String prev = "";
+        String current = "";
+        while (st.hasMoreTokens()) {
+            prev = current;
+            current = st.nextToken();
+            //if(current.indexOf('C')!=-1 && prev.contains("1234567890"))
+            ThermomterReading.setValue(text);
+        }
+
     }
 
 

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "680993159005",
+    "firebase_url": "https://droidreader-18.firebaseio.com",
+    "project_id": "droidreader-18",
+    "storage_bucket": "droidreader-18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680993159005:android:50e3068ab44fdff9",
+        "android_client_info": {
+          "package_name": "com.example.dr5"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "680993159005-n7ktrn26n1ag247um6oba3c600tj0m2g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dr5",
+            "certificate_hash": "fa07d2a425adcecb594ce5d8fff344ec3e1f3c32"
+          }
+        },
+        {
+          "client_id": "680993159005-da01o7cre28nqentbdbo50iduudiv0hd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhIaDWaVBJ98Kp6HcLvSevUSvw9EU-zEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "680993159005-da01o7cre28nqentbdbo50iduudiv0hd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
