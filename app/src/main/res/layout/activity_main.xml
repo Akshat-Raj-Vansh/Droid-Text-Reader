@@ -117,6 +117,18 @@
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="15dp"
+        android:clickable="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/allProcesses"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="?attr/actionModeCutDrawable" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/updateToCloud"
         android:layout_width="56dp"
         android:layout_height="56dp"

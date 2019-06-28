@@ -3,6 +3,8 @@ package com.example.dr5;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton btnProcessX;
     FloatingActionButton loadImageX;
     FloatingActionButton updateToCloud;
+    FloatingActionButton reset;
     TextView txtView;
     Bitmap bitmap;
     final int CAMERA_REQUEST = 9999;
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         btnProcessX = findViewById(R.id.btnProcessX);
         loadImageX = findViewById(R.id.loadImageX);
         updateToCloud = findViewById(R.id.updateToCloud);
+        reset = findViewById(R.id.reset);
 
         fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
@@ -90,6 +94,10 @@ public class MainActivity extends AppCompatActivity {
         txtView = findViewById(R.id.txtView);
         textTargetUri = findViewById(R.id.targeturi);
         targetImage = findViewById(R.id.image_view);
+
+        targetImage.setImageResource(R.drawable.home);
+        final Drawable myDrawable = getResources().getDrawable(R.drawable.home);
+        bitmap = ((BitmapDrawable) myDrawable).getBitmap();
 
         btnProcessX.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +113,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                targetImage.setImageResource(R.drawable.home);
+                txtView.setText("Reset button was pressed");
+                bitmap = ((BitmapDrawable) myDrawable).getBitmap();
+                textTargetUri.setText("");
+            }
+        });
         allProcesses.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,11 +262,13 @@ public class MainActivity extends AppCompatActivity {
             openCameraX.startAnimation(fab_close);
             updateToCloud.startAnimation(fab_close);
             btnProcessX.startAnimation(fab_close);
+            reset.startAnimation(fab_close);
 
             loadImageX.setClickable(false);
             openCameraX.setClickable(false);
             updateToCloud.setClickable(false);
             btnProcessX.setClickable(false);
+            reset.setClickable(false);
 
             isFabOpen = false;
             Log.d("FAB", "close");
@@ -262,11 +281,13 @@ public class MainActivity extends AppCompatActivity {
             openCameraX.startAnimation(fab_open);
             updateToCloud.startAnimation(fab_open);
             btnProcessX.startAnimation(fab_open);
+            reset.startAnimation(fab_open);
 
             loadImageX.setClickable(true);
             openCameraX.setClickable(true);
             updateToCloud.setClickable(true);
             btnProcessX.setClickable(true);
+            reset.setClickable(true);
 
             isFabOpen = true;
             Log.d("FAB", "open");
@@ -284,13 +305,14 @@ public class MainActivity extends AppCompatActivity {
                 value = value + " " + word;
             }
         }
-
+        if (value != "")
+            ThermomterReading.setValue(value);
     }
 
-    private boolean IsNumber(String word) {
+    public boolean IsNumber(String word) {
         int length = word.length();
         boolean flag = true;
-        for (int i = 0; i <= length; i++) {
+        for (int i = 0; i < length; i++) {
             if ("1234567890".indexOf(word.charAt(i)) == -1) {
                 flag = false;
                 break;
